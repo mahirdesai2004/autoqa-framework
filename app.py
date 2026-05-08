@@ -4,7 +4,7 @@ from selenium_runner import run_test
 from evaluation_layer import evaluate, validate_steps
 from notifier import notify_user
 
-st.title("Agentic AI QA Engineer")
+st.title("AutoQA: AI Test Automation")
 
 requirement = st.text_area(
     "Enter software requirement:",
@@ -17,10 +17,14 @@ test_url = st.text_input(
 )
 
 if st.button("Run AI QA Test"):
-    with st.spinner("🔍 Analyzing page and generating test steps..."):
-        steps = generate_test_steps(requirement, test_url)
-    st.subheader("Generated Test Steps")
-    st.json(steps)
+    try:
+        with st.spinner("🔍 Analyzing page and generating test steps..."):
+            steps = generate_test_steps(requirement, test_url)
+        st.subheader("Generated Test Steps")
+        st.json(steps)
+    except Exception as e:
+        st.error(f"Error generating test steps: {str(e)}")
+        st.stop()
 
     is_valid, msg = validate_steps(steps)
     if not is_valid:

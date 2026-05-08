@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.env
+.git/
+.github/
+screenshots/pass/*
+screenshots/fail/*
+!screenshots/pass/.gitkeep
+!screenshots/fail/.gitkeep
+test_websites/
+uv.lock
