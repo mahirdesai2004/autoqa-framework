@@ -41,8 +41,11 @@ if st.button("Run AI QA Test"):
     if result == "PASS":
         st.write(evaluate(result, reason))
     else:
-        detailed_explanation = explain_failure(requirement, steps, reason)
-        st.write(detailed_explanation)
+        try:
+            detailed_explanation = explain_failure(requirement, steps, reason)
+            st.write(detailed_explanation)
+        except Exception as e:
+            st.error(f"Error generating failure explanation: {str(e)}")
 
     if screenshot_path:
         st.subheader("📸 Test Screenshot")

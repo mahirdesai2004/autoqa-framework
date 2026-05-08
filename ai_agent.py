@@ -2,17 +2,12 @@ import os
 import json
 import requests
 from bs4 import BeautifulSoup
-import google.generativeai as genai
 from dotenv import load_dotenv
+
+from llm_orchestrator import generate_content
 
 # Load environment variables
 load_dotenv()
-
-# Configure Gemini
-genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
-
-MODEL_NAME = os.getenv("GEMINI_MODEL", "models/gemini-2.5-flash")
-model = genai.GenerativeModel(MODEL_NAME)
 
 
 def analyze_page(url: str) -> str:
@@ -148,8 +143,7 @@ JSON format:
 ]
 """
 
-    response = model.generate_content(prompt)
-    text = response.text.strip()
+    text = generate_content(prompt)
     
     # Clean up response - remove markdown code blocks if present
     if text.startswith("```"):
@@ -193,5 +187,4 @@ Provide:
 Be concise and helpful. No markdown formatting.
 """
 
-    response = model.generate_content(prompt)
-    return response.text.strip()
+    return generate_content(prompt)

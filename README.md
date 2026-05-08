@@ -16,6 +16,7 @@ By leveraging **DOM context injection** and a **fault-tolerant execution engine*
 ## ✨ Engineering Highlights
 
 - 🧠 **Context-Aware DOM Parsing:** Utilizes BeautifulSoup to scrape the target webpage in real-time, extracting interactive elements (forms, inputs, buttons) and injecting them into the LLM context to prevent selector hallucinations.
+- 🔁 **Multi-Provider LLM Orchestration:** Built with a resilient, provider-agnostic abstraction layer. Automatically cascades through **Google Gemini (with key rotation) → Mistral AI → Groq** if quotas are exceeded or APIs fail, ensuring continuous operation.
 - 🛡️ **Fault-Tolerant Execution:** The Selenium runner implements a smart fallback strategy (`find_element_smart`). If the primary selector fails, it automatically degrades through alternative locators (ID -> Name -> CSS -> Tag), ensuring test stability against dynamic UI changes.
 - 🔒 **Input Validation Guardrails:** Enforces a strict validation layer to verify the AI-generated JSON payload before execution, securing the framework against invalid or rogue commands.
 - 🩺 **Self-Diagnostic Reporting:** In the event of a test failure, the framework captures the error trace and feeds it back to the LLM to generate a human-readable root-cause analysis, accelerating debugging.
@@ -75,10 +76,22 @@ graph TD
 - A Google Gemini API Key
 
 ### Environment Variables
-Create a `.env` file in the root directory:
+AutoQA supports **Multi-Provider LLM Orchestration**. If your primary key exhausts its quota or encounters a temporary failure, the system seamlessly cascades to the next available provider without crashing the UI.
+
+Create a `.env` file (or copy from `.env.example`) in the root directory:
 ```env
+# --- PRIMARY PROVIDER ---
 GEMINI_API_KEY=your_google_gemini_api_key
+
+# Optional Gemini Key Rotation
+GEMINI_API_KEY_1=your_backup_gemini_key_1
+GEMINI_API_KEY_2=your_backup_gemini_key_2
+
+# --- FALLBACK PROVIDERS (Optional) ---
+MISTRAL_API_KEY=your_mistral_key_here
+GROQ_API_KEY=your_groq_key_here
 ```
+*Note: If an optional provider's key is missing, the orchestrator will safely skip it.*
 
 ### Option A: Local Installation
 1. **Clone the repository:**
