@@ -17,6 +17,7 @@ By leveraging **DOM context injection** and a **fault-tolerant execution engine*
 
 - 🧠 **Context-Aware DOM Parsing:** Utilizes BeautifulSoup to scrape the target webpage in real-time, extracting interactive elements (forms, inputs, buttons) and injecting them into the LLM context to prevent selector hallucinations.
 - 🔁 **Multi-Provider LLM Orchestration:** Built with a resilient, provider-agnostic abstraction layer. Automatically cascades through **Google Gemini (with key rotation) → Mistral AI → Groq** if quotas are exceeded or APIs fail, ensuring continuous operation.
+- 🎨 **Cinematic WebGL-Inspired UI:** Features a premium, hardware-accelerated dark mode interface with glassmorphism, animated ambient gradient lighting, and real-time orchestration telemetry—achieved entirely without heavy JS dependencies.
 - 🛡️ **Fault-Tolerant Execution:** The Selenium runner implements a smart fallback strategy (`find_element_smart`). If the primary selector fails, it automatically degrades through alternative locators (ID -> Name -> CSS -> Tag), ensuring test stability against dynamic UI changes.
 - 🔒 **Input Validation Guardrails:** Enforces a strict validation layer to verify the AI-generated JSON payload before execution, securing the framework against invalid or rogue commands.
 - 🩺 **Self-Diagnostic Reporting:** In the event of a test failure, the framework captures the error trace and feeds it back to the LLM to generate a human-readable root-cause analysis, accelerating debugging.
