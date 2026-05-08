@@ -6,3 +6,5 @@ requests
 beautifulsoup4
 groq
 mistralai
+fastapi[standard]
+uvicorn
